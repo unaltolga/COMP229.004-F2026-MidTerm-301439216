@@ -4,9 +4,18 @@ module.exports.usersList = async function (req, res, next) {
 
     try {
         // Retrieves a list of users from the DB and waits for the result.
-        // Add your code here to retrieve the list of users from the database using the UsersModel.        
+        // Add your code here to retrieve the list of users from the database using the UsersModel.
+        let list = await UsersModel.find();
 
         // If the list is empty, throw an error. Otherwise, return the list as a JSON response.
+        if (!list || list.length === 0)
+            throw new Error('No users found.');
+
+        res.json({
+            success: true,
+            message: "Users list retrieved successfully.",
+            data: list
+        });
     } catch (error) {
         console.log(error);
         next(error);
@@ -37,6 +46,17 @@ module.exports.processAdd = async (req, res, next) => {
  
         // Builds a new user from the values of the body of the request.
         // Add your code here to create a new user object using the UsersModel and the data from req.body
+        let newUser = UsersModel(req.body);
+
+        // Submits newUser to the DB and waits for a result.
+        let result = await UsersModel.create(newUser);
+        console.log("====> Result: ", result);
+
+        res.json({
+            success: true,
+            message: "User added successfully.",
+            data: result
+        });
 
     } catch (error) {
         console.log(error);
