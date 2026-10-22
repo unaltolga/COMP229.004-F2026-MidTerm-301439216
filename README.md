@@ -1,1 +1,2 @@
-# COMP229.TolgaUnal-F2026--301439216
+# COMP229.F2025.Midterm.Template
+COMP229.F2025 - Midterm Template
